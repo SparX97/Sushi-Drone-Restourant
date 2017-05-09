@@ -1,36 +1,33 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by SPAS on 04/05/2017.
  */
 public class Storage {
+    private static Map<Ingredient, Inventory> ingredients;
+    private static Map<SushiDish, Inventory> readyDishes;
 
-    private ArrayList<Tracker> inventory;
-    private ArrayList<Tracker> readyDishes;
     public Storage(){
-        inventory = new ArrayList<>();
-        readyDishes = new ArrayList<>();
+        ingredients = new HashMap<>();
+        readyDishes = new HashMap<>();
     }
 
-    private class Tracker<T> {
+    public void addIngredient(Ingredient food){
 
-        private T item;
-        private int quantity;
-        private int restockOn;
-
-        private Tracker(T item, int restockOn){
-            this.item = item;
-            this.restockOn = restockOn;
-            quantity = 0;
-        }
     }
 
-    //new ingredient for new recipes
+    public void igredientExists(Ingredient someIngr){
+        
+    }
+
+    /*//new ingredient for new recipes
     private void newIngredient(Ingredient component, int restockLevel) {
-        inventory.add(new Tracker<Ingredient>(component, restockLevel));
+        inventory.add(new Track<Ingredient>(component, restockLevel));
     }
 
     private void newDish(SushiDish recipe, int restockLevel){
-        readyDishes.add(new Tracker<SushiDish>(recipe, restockLevel));
-    }
+        readyDishes.add(new Track<SushiDish>(recipe, restockLevel));
+    }*/
+
 }
