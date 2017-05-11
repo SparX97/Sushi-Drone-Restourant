@@ -8,14 +8,14 @@ import java.net.Socket;
 /**
  * Created by SPAS on 10/05/2017.
  */
-public class Comms {
+public class ServerComms {
 
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private ServerSocket theServer;
     private Socket theConnection;
 
-    public Comms() {
+    public ServerComms() {
         /*try {
             output = new ObjectOutputStream();
         } catch (IOException e) {
@@ -25,7 +25,7 @@ public class Comms {
 
     }
 
-    private void startServer(){
+    public void startServer(){
         try {
             //port and number of people that can connect
             theServer = new ServerSocket(2512, 30);
@@ -65,7 +65,7 @@ public class Comms {
 
     //communication between server - client
     private void exchangeInfo() throws IOException{
-        String theMessage = "You are now connected to the sushi SERVER !!";
+        String theMessage = "FROM SERVER - You are now connected to the sushi SERVER !!";
         sendMessage(theMessage);
         //Customer Able to select(true)?
 
@@ -73,7 +73,7 @@ public class Comms {
             try{
                 theMessage = (String) input.readObject();
                 System.out.println(theMessage);
-                //TODO send to receive message
+                //TODO send to receiveMessage
             }catch (ClassNotFoundException e){
                 System.err.println(" This is very bad... what class did you send");
             }

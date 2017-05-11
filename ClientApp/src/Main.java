@@ -15,5 +15,8 @@ public class Main {
                     }
                 }
         );
+
+        ClientComms client = new ClientComms();
+        client.startClient();
     }
 }

@@ -1,13 +1,12 @@
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by SPAS on 09/05/2017.
  */
 public class Main {
 
     public static void main(String args[]){
-        Ingredient apple = new Ingredient("apple");
+
+        //TODO so this test works!
+        /*Ingredient apple = new Ingredient("apple");
         Ingredient tomato = new Ingredient("tomato");
         Ingredient pear = new Ingredient("pear");
         Ingredient coco = new Ingredient("coco");
@@ -58,6 +57,10 @@ public class Main {
 
         t1.start();
         t2.start();
-        t3.start();
+        t3.start();*/
+
+
+        ServerComms myServer = new ServerComms();
+        myServer.startServer();
     }
 }
