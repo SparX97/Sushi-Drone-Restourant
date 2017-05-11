@@ -19,7 +19,8 @@ public class SushiDish {
         occupied = false;
     }
 
-    public SushiDish(Map recipe){
+    public SushiDish(String name, Map recipe){
+        this.name = name;
         this.recipe = recipe;
         occupied = false;
     }
@@ -31,6 +32,8 @@ public class SushiDish {
     public void setOccupied(Boolean occupied){
         this.occupied = occupied;
     }
+
+    public String getName(){return name;}
 
     public boolean isOccupied(){
         return occupied;

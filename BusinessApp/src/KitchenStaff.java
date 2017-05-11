@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -8,18 +7,20 @@ import java.util.Random;
 public class KitchenStaff implements Runnable {
 
 
+    private String name;
     private Random rand;
-//    private volatile boolean isCooking;
+    //    private volatile boolean isCooking;
     private Map<Ingredient, Inventory> ingredientsRef;
     private Map<SushiDish, Inventory> readyDishRef;
 
-    public KitchenStaff() {
+    /*public KitchenStaff() {
         rand = new Random();
-    }
+    }*/
 
-    public KitchenStaff(HashMap<Ingredient, Inventory> ingredients, HashMap<SushiDish, Inventory> readyDishes) {
-        ingredientsRef = ingredients;
-        readyDishRef = readyDishes;
+    public KitchenStaff(String name, StockManager theStockManager) {
+        this.name = name;
+        ingredientsRef = theStockManager.getIngredients();
+        readyDishRef = theStockManager.getReadyDishes();
         rand = new Random();
 //        isCooking = false;
     }
@@ -41,19 +42,25 @@ public class KitchenStaff implements Runnable {
                     }
                 }
             }
-            if(understocked != null) cook(understocked);
+            if (understocked != null) {
+                cook(understocked);
+                understocked = null;
+            }
         }
     }
 
     //cook ingredients if bellow restocklvl
     private void cook(SushiDish dish) {
         Map<Ingredient, Integer> recipe = dish.getRecipe();
-        for (Ingredient i : recipe.keySet()) {
-            int useAmount = recipe.get(i);
-            synchronized (ingredientsRef) {
+        synchronized (ingredientsRef) {
+            for (Ingredient i : recipe.keySet()) {
+                int useAmount = recipe.get(i);
+
                 Inventory stock = ingredientsRef.get(i);
                 stock.decrementBy(useAmount);
+//                System.out.println(i.getName() + " decremented by: " + useAmount + " - left: " + stock.getQuantity());
             }
+//            System.out.println("all by " + name);
         }
         try {
             Thread.sleep(2000 + 100 * rand.nextInt(40));
@@ -63,6 +70,9 @@ public class KitchenStaff implements Runnable {
         synchronized (readyDishRef) {
             Inventory dishStock = readyDishRef.get(dish);
             dishStock.increment();
+            dish.setOccupied(false);
+            System.out.println(dish.getName() + " - total created: " + dishStock.getQuantity());
+            System.out.println("CREATOR " + name + "\n");
         }
     }
 

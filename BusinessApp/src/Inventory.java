@@ -6,9 +6,14 @@ public class Inventory {
     private int quantity;
     private int restocklvl;
 
-    private Inventory(int restocklvl) {
+    public Inventory(int restocklvl) {
         this.restocklvl = restocklvl;
-        quantity = 0;
+        this.quantity = 0;
+    }
+
+    public Inventory(){
+        this.restocklvl = 0;
+        this.quantity = 0;
     }
 
     public int getQuantity(){
