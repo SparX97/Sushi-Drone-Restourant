@@ -18,5 +18,7 @@ public class Main {
 
         ClientComms client = new ClientComms();
         client.startClient();
+        /*System.out.println("anything?");
+        client.sendMessage("HOW YOU DOIN MY MAN!!");*/
     }
 }

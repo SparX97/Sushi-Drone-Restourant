@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by SPAS on 11/05/2017.
@@ -69,11 +70,14 @@ public class ClientComms {
                 //TODO send to receiveMessage
             }catch (ClassNotFoundException e){
                 System.err.println("just a class error... it should have been converted!!");
+            }catch (SocketException e){
+                System.err.println("Server was shut down");
+                break;
             }
-        }while(true);
+        }while(connectionToServer.isConnected());
     }
 
-    private void sendMessage(Object message){
+    public void sendMessage(String message){
         try {
             output.writeObject(message);
             output.flush();
@@ -83,8 +87,8 @@ public class ClientComms {
         }
     }
 
-    private void receiveMessage(){
-
+    private void receiveMessage(String message){
+        System.out.println(message);
     }
 
 }

@@ -31,52 +31,54 @@ public class Menu extends JPanel {
 
         vertical = new JPanel();
         vertical.setLayout(new BoxLayout(vertical,BoxLayout.PAGE_AXIS));
+        /*GridLayout gLayout = new GridLayout(0,5);
+        gLayout.setHgap(10);
+        vertical.setLayout(gLayout);*/
         scroll = new JScrollPane(vertical);
-        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+//        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         add(scroll,vertical);
 
         JPanel test = new JPanel();
         add(test);
-        addDish("cry", 3.50, 4);
-        addDish("cry2", 3.50, 4);
-        addDish("cry3", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
-        addDish("cry4", 3.50, 4);
+        addDish(new Dish("haha", "myDescription", 4.25, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        /*addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));
+        addDish(new Dish("haha", "myDescription", 4.20, 7));*/
         revalidate();
         repaint();
 //        vertical.setLayout(new GridLayout(1, 3));
@@ -85,18 +87,27 @@ public class Menu extends JPanel {
     }
 
     //add new dish information to menu
-    private void addDish(String name, double price, int stock) {
-        JPanel dishHolder = new JPanel(new GridLayout(1,3));
-        Dish newDish = new Dish(name, price, stock);
+    private void addDish(Dish newDish) {
+        JPanel dishPanel = new JPanel(new GridLayout(1,5));
+//        Dish newDish = new Dish(name, price, stock);
         dishes.add(newDish);
-        JLabel temp = new JLabel("In stock: " + newDish.getStock());
-        dishHolder.add(temp);
-        JLabel nameAndPrice = new JLabel(newDish.getName() + " Price: " + newDish.getPrice());
-        dishHolder.add(nameAndPrice);
-        dishHolder.add(buttonsFor(newDish));
-        dishHolder.setMaximumSize(new Dimension(800,25));
+        JLabel stock = new JLabel("<" + newDish.getStock() + "> In stock");
+        dishPanel.add(stock);
+        JLabel name = new JLabel(newDish.getName());
+        dishPanel.add(name);
+        JLabel desc = new JLabel(newDish.getDescription());
+        dishPanel.add(desc);
+        JLabel price;
+        if((newDish.getPrice() * 100) % 10 == 0){
+            price = new JLabel("Price: " + newDish.getPrice() + "0$");
+        } else {
+            price = new JLabel("Price: " + newDish.getPrice() + "$");
+        }
+        dishPanel.add(price);
+        dishPanel.add(buttonsFor(newDish));
+        dishPanel.setMaximumSize(new Dimension(800,25));
 //        dishHolder.setBorder(BorderFactory.createLineBorder(Color.black));
-        vertical.add(dishHolder);
+        vertical.add(dishPanel);
         revalidate();
     }
 
@@ -125,9 +136,9 @@ public class Menu extends JPanel {
         return Bpanel;
     }
 
-    public void addDish(String name, double price) {
-        addDish(name, price, 0);
-    }
+//    public void addDish(String name, double price) {
+//        addDish(name, price, 0);
+//    }
 
     private void placeOrder() {
         currentOrders.add(basket);
