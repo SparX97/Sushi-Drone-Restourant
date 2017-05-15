@@ -14,7 +14,7 @@ public class StockManager {
     }
 
     //checks if the restaurant uses this kind of ingredient
-    private boolean igredientExists(Ingredient someIngr){
+    private boolean ingredientExists(Ingredient someIngr){
         for(Ingredient i : ingredients.keySet()){
             if(i.getName().equals(someIngr.getName()))return true;
         }
@@ -23,7 +23,7 @@ public class StockManager {
 
     //adds a new type of ingredient
     public void addIngredient(Ingredient food, int restocklvl){
-        if(this.igredientExists(food)){
+        if(this.ingredientExists(food)){
             System.err.println("we are already using: " + food.getName());
         } else {
             Inventory temp = new Inventory(restocklvl);
@@ -40,11 +40,12 @@ public class StockManager {
     }
 
     //adds a new type of SushiDish
-    public void addDish(SushiDish dish, int restocklvl){
+    public void addDish(SushiDish dish,int startSupply, int restocklvl){
         if(this.dishExists(dish)){
             System.err.println("we are already using: " + dish.getName());
         } else {
             Inventory temp = new Inventory(restocklvl);
+            temp.incrementBy(startSupply);
             readyDishes.put(dish, temp);
         }
     }
@@ -61,6 +62,8 @@ public class StockManager {
 
     public Map getIngredients(){return ingredients;}
 
-    public Map getReadyDishes(){return readyDishes;}
+    public Map getReadyDishes(){
+        return readyDishes;
+    }
 
 }

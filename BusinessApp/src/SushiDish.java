@@ -19,11 +19,11 @@ public class SushiDish {
         occupied = false;
     }
 
-    public SushiDish(String name, Map recipe){
+    /*public SushiDish(String name, Map recipe){
         this.name = name;
         this.recipe = recipe;
         occupied = false;
-    }
+    }*/
 
     public Map getRecipe(){
         return recipe;
@@ -34,6 +34,14 @@ public class SushiDish {
     }
 
     public String getName(){return name;}
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 
     public boolean isOccupied(){
         return occupied;

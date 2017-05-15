@@ -5,20 +5,25 @@ import javax.swing.*;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        ClientFrame client = new ClientFrame("Client window");
-                        client.setUp();
-                    }
-                }
-        );
+public static class GUIcreator implements Runnable {
+    private ClientComms comms;
 
-        ClientComms client = new ClientComms();
-        client.startClient();
-        /*System.out.println("anything?");
-        client.sendMessage("HOW YOU DOIN MY MAN!!");*/
+    public GUIcreator(ClientComms comms){
+        this.comms = comms;
+    }
+    
+    @Override
+    public void run() {
+        ClientFrame client = new ClientFrame("Client window", comms);
+        client.setUp();
+    }
+}
+
+    public static void main(String[] args) {
+
+        ClientComms comms = new ClientComms();
+        SwingUtilities.invokeLater(new GUIcreator(comms));
+
+        comms.startClientComms();
     }
 }

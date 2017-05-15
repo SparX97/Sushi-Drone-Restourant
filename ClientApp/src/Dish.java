@@ -16,6 +16,14 @@ public class Dish {
         this.inStock = inStock;
     }
 
+    public void removeStock(){
+        inStock--;
+    }
+
+    public void addStock(){
+        inStock++;
+    }
+
     public int getStock() {
         return inStock;
     }

@@ -2,24 +2,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by SPAS on 10/05/2017.
  */
 public class ClientFrame extends JFrame {
 
-    JPanel mainPane;
-    GridBagConstraints gbc;
+    private JPanel mainPane;
+    private GridBagConstraints gbc;
+    private ClientComms comms;
 
-    public ClientFrame(String title){
+    private ArrayList<String> postcodes;
+    JComboBox postBox;
+
+    public ClientFrame(String title, ClientComms comms){
         super(title);
+        this.comms = comms;
+//        comms.setFrameRef(this);
+
     }
 
     public void setUp(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600,400);
 
-        
+        postcodes = new ArrayList<>();//todo keep an eye on it
 
         mainPane = new JPanel(new GridBagLayout());
         gbc = new GridBagConstraints();
@@ -46,6 +54,8 @@ public class ClientFrame extends JFrame {
         regB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                comms.sendMessage("Registering");
+//                postBox = new JComboBox(comms.getPostCodes().toArray());
                 reg();
             }
         });
@@ -56,18 +66,33 @@ public class ClientFrame extends JFrame {
 
     //creating a login panel
     private void logIn(){
+        comms.sendMessage("Login");
         mainPane.removeAll();
 
         final JLabel text = new JLabel("Please enter your UserInfo:");
         text.setFont(new Font("Comic Sans MS", 1 , 20));
         final JTextField textField = new JTextField(15);
-        final JPasswordField passField = new JPasswordField(15);
+        final JTextField passField = new JPasswordField(15);
         final JButton EnterB = new JButton("SIGN IN!");
         EnterB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO check account
-                openMenu();
+
+                checkAccount(textField.getText(), passField.getText());
+                while(comms.getPermission().equals("wait")) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+                if(comms.getPermission().equals("yes")){
+//                    System.out.println(comms.getPermission());
+                    openMenu();
+                } else {
+                    text.setText("Incorrect UserData - try again");
+                    comms.resetPermission();
+                }
             }
         });
         gbc.gridx = 0;
@@ -90,30 +115,48 @@ public class ClientFrame extends JFrame {
         mainPane.repaint();
     }
 
+    //server checks if account exists
+    private void checkAccount(String name, String pass){
+        comms.sendMessage("check:" + name + ":" + pass);
+    }
+
     //creating a panel for registration
     private void reg(){
-        String[] postCodes = {"SO18 2NU", "SO12 4SZ", "SO24 5KO"};
+//        comms.sendMessage("Registering");
+
+//        String[] postCodes = {"SO18 2NU", "SO12 4SZ", "SO24 5KO"};
         mainPane.removeAll();
         String selected = null;
 
         final JLabel topText = new JLabel("Register Form");
-        topText.setFont(new Font("Comic Sans MS", 1 , 20));
-        final JTextField textField = new JTextField(15);
+        topText.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+        final JTextField usernameField = new JTextField(15);
         final JLabel chooseName = new JLabel("Username: ");
-        final JPasswordField passField = new JPasswordField(15);
+        final JTextField passField = new JPasswordField(15);
         final JLabel choosePass = new JLabel("Password: ");
+
+        JLabel choosePost = new JLabel("Post Code: ");
+//        synchronized (postBox) {
+            postBox = new JComboBox(comms.getPostCodes().toArray());
+//        }
+//        postBox.setModel(new DefaultComboBoxModel(postcodes.toArray()));
+//        selected = (String) postBox.getSelectedItem();
+
         final JButton EnterB = new JButton("SIGN UP!");
         EnterB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO create account
+                System.out.println(usernameField.getText() + "   "  + passField.getText()+ "    " +postBox.getSelectedItem().toString());
+                /*User temp = new User(usernameField.getText(), passField.getText(), postBox.getSelectedItem().toString());
+                System.out.println(temp.getClass().getSimpleName());
+                comms.sendMessage(temp);*/
+                //TODO delete later if not fixed
+                comms.sendMessage("user:" + usernameField.getText() + ":"  + passField.getText()+ ":" +postBox.getSelectedItem().toString());
+
+
                 openMenu();
             }
         });
-        JLabel choosePost = new JLabel("Post Code: ");
-        JComboBox<String> postBox = new JComboBox<>(postCodes);
-        selected = (String) postBox.getSelectedItem();
-
 
         /*postBox.addActionListener(new ActionListener() {
             @Override
@@ -139,7 +182,7 @@ public class ClientFrame extends JFrame {
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets = new Insets(6,0,6,0);
-        mainPane.add(textField, gbc);
+        mainPane.add(usernameField, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -168,10 +211,23 @@ public class ClientFrame extends JFrame {
 //        mainPane.removeAll();
         remove(mainPane);
         setSize(new Dimension(1600, 900));
-        add(new Menu());
+        add(new Menu(comms));
         setResizable(false);
 
         revalidate();
         repaint();
     }
+
+    /*public void addToPostcodes(String code){
+        synchronized (postBox) {
+            postcodes.add(code);
+        }
+    }*/
+
+    /*public void setPostBox(ArrayList codes){
+        synchronized (postBox) {
+            postBox.setModel(new DefaultComboBoxModel(codes.toArray()));
+        }
+        revalidate();
+    }*/
 }
