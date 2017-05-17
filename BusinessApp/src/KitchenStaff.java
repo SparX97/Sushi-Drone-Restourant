@@ -12,6 +12,7 @@ public class KitchenStaff implements Runnable {
     //    private volatile boolean isCooking;
     private Map<Ingredient, Inventory> ingredientsRef;
     private Map<SushiDish, Inventory> readyDishRef;
+    private String status;
 
     /*public KitchenStaff() {
         rand = new Random();
@@ -22,6 +23,7 @@ public class KitchenStaff implements Runnable {
         ingredientsRef = theStockManager.getIngredients();
         readyDishRef = theStockManager.getReadyDishes();
         rand = new Random();
+        status = "standby";
 //        isCooking = false;
     }
 
@@ -63,7 +65,9 @@ public class KitchenStaff implements Runnable {
 //            System.out.println("all by " + name);
         }
         try {
+            status = "cooking";
             Thread.sleep(2000 + 100 * rand.nextInt(40));
+            status = "standby";
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

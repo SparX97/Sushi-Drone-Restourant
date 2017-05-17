@@ -33,4 +33,12 @@ public class Inventory {
     public void increment(){
         incrementBy(1);
     }
+
+    public void setRestock(int newRestock){
+        restocklvl = newRestock;
+    }
+
+    public void setStock(int stock){
+        this.quantity = stock;
+    }
 }

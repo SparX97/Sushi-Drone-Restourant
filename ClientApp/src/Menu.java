@@ -72,16 +72,15 @@ public class Menu extends JPanel {
         emptySpace = new JTextArea();
         emptySpace.setBackground(new Color(240,240,240));
         emptySpace.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        emptySpace.setVisible(false);
         infoHolder.add(new JScrollPane(emptySpace));
 
         Font textFont = new Font("Dialog", Font.PLAIN, 30);
 
         JButton currentOrdersB = new JButton("Current Orders");
         currentOrdersB.setFont(textFont);
-        currentOrdersB.addActionListener(e -> {
-            //TODO display current orders on empty space
-            displayCurrentOrders();
-        });
+
+        currentOrdersB.addActionListener(e -> toggleDisplayCurrent());
         c.gridx = 0;
         c.fill = GridBagConstraints.BOTH;
 //        c.fill = GridBagConstraints.VERTICAL;
@@ -287,15 +286,17 @@ public class Menu extends JPanel {
 
         //TODO send info to server
         basket.setStatus("Order placed / Dispatching");
-        Order newOrder = new Order();
+       /* Order newOrder = new Order();
         newOrder.setStatus(basket.getStatus());
         newOrder.setOrderedDishes(basket.getOrderedDishes());
-        newOrder.setTotal(basket.getTotal());
-        currentOrders.add(newOrder);
-        basket.removeAll();
+        newOrder.setTotal(basket.getTotal());*/
+        currentOrders.add(basket);
+//        basket.removeAll();
+        basket = new Order();
         orderInfo.setText("\nSHOPPING BASKET\n\n");
         updateTotal();
 
+        displayCurrentOrders();
     }
 
     private void updateDishes(){
@@ -304,22 +305,28 @@ public class Menu extends JPanel {
 
     //TODO FIX THISSSSS
     private void displayCurrentOrders(){
+
         emptySpace.setText("");
-        Font tempFont = new Font("Serif", Font.BOLD, 20);
+        Font tempFont = new Font("Serif", Font.BOLD, 16);
 //        Font textFont = new Font("Serif", Font.BOLD, 12);
         for(Order i : currentOrders){
             emptySpace.setFont(tempFont);
-            emptySpace.append("\nOrder Total: £" + i.getTotal());
+            emptySpace.append("\n\nOrder Total: £" + i.getTotal());
             emptySpace.append("\nStatus: " + i.getStatus());
-            /*tempFont.deriveFont(12);*/
+            tempFont.deriveFont(Font.PLAIN, 12);
             Map<Dish, Integer> temp = i.getOrderedDishes();
             for(Dish j : temp.keySet()){
 //                Dish temp = (Dish) j;
-                emptySpace.append("\n" + j.getName() + "  £" + String.format("%.2f", j.getPrice()) + " x" + temp.get(j) + "\n");
+                emptySpace.append("\n" + j.getName() + "  £" + String.format("%.2f", j.getPrice()) + " x" + temp.get(j));
             }
             /*temp.forEach((dish, value) ->{
                 emptySpace.append("\n" + dish.getName() + "  £" + String.format("%.2f", dish.getPrice()) + " x" + value + "\n");
             });*/
         }
+    }
+
+    private void toggleDisplayCurrent(){
+        displayCurrentOrders();
+        emptySpace.setVisible(!emptySpace.isVisible());
     }
 }

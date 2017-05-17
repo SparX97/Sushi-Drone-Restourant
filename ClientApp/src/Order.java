@@ -29,7 +29,7 @@ public class Order implements Cloneable{
                         theDish.removeStock();
 //                        System.out.println("new amount: " + orderedDishes.get(i));
 //                        total = total + theDish.getPrice();
-                    } else if(theDish.getStock() == 0 && isAdding){
+                    } else if(theDish.getStock() <= 0 && isAdding){
                         System.out.println("not enough stock of " + theDish.getName() + " for this order");
                     } else if(pastAmount == 1 && !isAdding){
                         theDish.addStock();
@@ -46,7 +46,7 @@ public class Order implements Cloneable{
                 }
             }
         } else {
-            if(isAdding){
+            if(isAdding && theDish.getStock() > 0){
                 theDish.removeStock();
                 orderedDishes.put(theDish, 1);
 //                total = theDish.getPrice();

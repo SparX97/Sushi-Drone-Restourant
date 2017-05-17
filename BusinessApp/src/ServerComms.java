@@ -24,7 +24,7 @@ public class ServerComms {
 
     private List<String> postcodes;
     private List<User> users;
-    private StockManager theStockManager;
+    private static StockManager theStockManager;
 
     public ServerComms(StockManager theStockManager) {
 

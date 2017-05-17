@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -7,10 +9,12 @@ import java.util.Map;
 public class StockManager {
     private static Map<Ingredient, Inventory> ingredients;
     private static Map<SushiDish, Inventory> readyDishes;
+    private static List<Supplier> suppliers;
 
     public StockManager(){
         ingredients = new HashMap<>();
         readyDishes = new HashMap<>();
+        suppliers = new ArrayList<>();
     }
 
     //checks if the restaurant uses this kind of ingredient
@@ -60,10 +64,24 @@ public class StockManager {
         }
     }
 
+    //could cause problems with dishes that require it
+    //delete dishes that use this ingredient first
+    public void removeIngrdient(Ingredient someIngredient){
+        ingredients.remove(someIngredient);
+    }
+
+    public void addSupplier(Supplier seller){
+        suppliers.add(seller);
+    }
+
     public Map getIngredients(){return ingredients;}
 
     public Map getReadyDishes(){
         return readyDishes;
+    }
+
+    public List getSuppliers(){
+        return suppliers;
     }
 
 }
